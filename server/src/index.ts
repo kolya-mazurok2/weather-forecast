@@ -1,5 +1,7 @@
 import express, { Application } from "express";
 import morgan from "morgan";
+import { dataSource } from "./config/database";
+import router from "./routes";
 
 const PORT = process.env.PORT || 8000;
 
@@ -9,12 +11,17 @@ app.use(express.json());
 app.use(express.static("public"));
 app.use(morgan("tiny"));
 
-app.get("/ping", async (_req, res) => {
-  res.send({
-    message: "pong",
-  });
-});
+app.use(router);
 
-app.listen(PORT, () => {
-  console.log(`Server is running at URL: http://localhost:${PORT}`);
-});
+(async () => {
+  try {
+    await dataSource.initialize();
+
+    app.listen(PORT, () => {
+      console.log(`Server is running at URL: http://localhost:${PORT}`);
+    });
+  } catch (error) {
+    console.log(`Database connection can not be established. Reason: ${error}`);
+    process.exit(1);
+  }
+})();
