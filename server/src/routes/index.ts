@@ -1,11 +1,8 @@
 import { Router } from "express";
+import cityRouter from "./city.router";
 
 const router = Router();
 
-router.get("/ping", async (_req, res) => {
-  res.send({
-    message: "pong",
-  });
-});
+router.use("/cities", cityRouter);
 
 export default router;

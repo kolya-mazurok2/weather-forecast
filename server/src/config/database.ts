@@ -11,10 +11,10 @@ const postgresConfig = {
 
 export const dataSource = new DataSource({
   type: "postgres",
-  synchronize: false,
+  synchronize: true,
   logging: false,
-  entities: ["./src/entities/**/*.entity{.ts,.js}"],
-  migrations: ["./src/migrations/**/*{.ts,.js}"],
+  entities: ["./src/entities/*.ts"],
   subscribers: [],
+  migrations: ["./src/migrations/*.ts"],
   ...postgresConfig,
 });
