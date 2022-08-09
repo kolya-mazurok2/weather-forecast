@@ -14,7 +14,7 @@ services:
       context: .
       dockerfile: Dockerfile
     volumes:
-      - ./src:/usr/weather-forecast/server/src
+      - ./src:/usr/weather-forecast/src
     ports:
       - "8000:8000"
     depends_on:

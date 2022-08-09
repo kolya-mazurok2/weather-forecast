@@ -20,15 +20,19 @@ export default class CityController {
   }
 
   public async get(
-    req: Request<RequestParams, any, any, any>,
+    req: Request,
     res: Response,
     next: NextFunction
   ): Promise<void> {
     const { id } = req.params;
-    const city = await getCity(id);
+    if (!id) {
+      return next(ApiError.badRequest());
+    }
+
+    const city = await getCity(parseInt(id));
 
     if (!city) {
-      next(ApiError.notFound());
+      return next(ApiError.notFound());
     }
 
     res.send({
@@ -37,12 +41,16 @@ export default class CityController {
   }
 
   public async getForecasts(
-    req: Request<RequestParams, any, any, any>,
+    req: Request,
     res: Response,
     next: NextFunction
   ): Promise<void> {
     const { id } = req.params;
-    const forecast = await getCityForecasts(id);
+    if (!id) {
+      return next(ApiError.badRequest());
+    }
+
+    const forecast = await getCityForecasts(parseInt(id));
 
     if (!forecast) {
       next(ApiError.notFound());
