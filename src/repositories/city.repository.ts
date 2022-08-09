@@ -13,29 +13,12 @@ export type CityUpdatePayload = CityPayload & {
   id: number;
 };
 
-export const getCity = async (id: number): Promise<City | null> => {
-  const start = new Date();
-  start.setUTCHours(0, 0, 0, 0);
-
-  const end = new Date();
-  end.setUTCHours(23, 59, 59, 999);
-
-  return dataSource.getRepository(City).findOne({
+export const getCity = async (id: number): Promise<City | null> =>
+  dataSource.getRepository(City).findOne({
     where: {
       id: id,
-      forecasts: {
-        type: ForecastType.CURRENT,
-        for_date: Between(start, end),
-      },
     },
-    order: {
-      forecasts: {
-        for_date: "ASC",
-      },
-    },
-    relations: ["forecasts"],
   });
-};
 
 export const getCityForecasts = async (id: number): Promise<City | null> =>
   dataSource.getRepository(City).findOne({

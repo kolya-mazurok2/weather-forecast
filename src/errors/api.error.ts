@@ -10,15 +10,19 @@ export default class ApiError extends Error {
     this.message = message;
   }
 
-  static badRequest(message: string) {
+  static badRequest(message = errorMessages[400]) {
     return new ApiError(400, message);
   }
 
-  static notFound() {
-    return new ApiError(404, errorMessages[404]);
+  static notFound(message = errorMessages[404]) {
+    return new ApiError(404, message);
   }
 
-  static internal() {
-    return new ApiError(500, errorMessages[500]);
+  static internal(message = errorMessages[500]) {
+    return new ApiError(500, message);
+  }
+
+  static unauthorized(message = errorMessages[401]) {
+    return new ApiError(401, message);
   }
 }

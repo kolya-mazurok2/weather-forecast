@@ -4,6 +4,8 @@ import { dataSource } from "./config/database";
 import router from "./routes";
 import jobs from "./jobs";
 import apiErrorMiddleware from "./middlewares/api-error.middleware";
+import bcrypt from "bcrypt";
+import { syncCurrentForecasts } from "./services/task/forecast.task";
 
 const PORT = process.env.PORT || 8000;
 

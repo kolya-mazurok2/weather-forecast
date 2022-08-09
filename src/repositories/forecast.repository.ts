@@ -1,6 +1,8 @@
+import { Between } from "typeorm";
 import { dataSource } from "../config/database";
 import { City } from "../entities/city";
 import { Forecast, ForecastType } from "../entities/forecast";
+import { todayEndDate, todayStartDate } from "../utils/date";
 
 export interface ForecastPayload {
   type: ForecastType;
@@ -26,8 +28,32 @@ export type ForecastUpdatePayload = ForecastPayload & {
   id: number;
 };
 
-export const getForecast = async (id: number): Promise<Forecast | null> =>
-  dataSource.getRepository(Forecast).findOneBy({ id: id });
+export const getCurrentForecast = async (
+  id: number
+): Promise<Forecast | null> => {
+  return dataSource.getRepository(Forecast).findOne({
+    where: {
+      id: id,
+      type: ForecastType.CURRENT,
+    },
+  });
+};
+
+export const getCurrentForecastsByCityId = async (
+  cityId: number
+): Promise<Forecast | null> =>
+  dataSource.getRepository(Forecast).findOne({
+    where: {
+      type: ForecastType.CURRENT,
+      for_date: Between(todayStartDate(), todayEndDate()),
+      city: {
+        id: cityId,
+      },
+    },
+    order: {
+      for_date: "DESC",
+    },
+  });
 
 export const getLastForecast = async (
   id: number,
