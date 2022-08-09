@@ -10,53 +10,47 @@ interface RequestParams {
   id: number;
 }
 
-export default class CityController {
-  public async getAll(_: Request, res: Response): Promise<void> {
-    const cities = await getCities();
+export const getAll = async (_: Request, res: Response) => {
+  const cities = await getCities();
 
-    res.send({
-      data: cities,
-    });
+  res.send({
+    data: cities,
+  });
+};
+
+export const get = async (req: Request, res: Response, next: NextFunction) => {
+  const { id } = req.params;
+  if (!id) {
+    return next(ApiError.badRequest());
   }
 
-  public async get(
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ): Promise<void> {
-    const { id } = req.params;
-    if (!id) {
-      return next(ApiError.badRequest());
-    }
+  const city = await getCity(parseInt(id));
 
-    const city = await getCity(parseInt(id));
-
-    if (!city) {
-      return next(ApiError.notFound());
-    }
-
-    res.send({
-      data: city,
-    });
+  if (!city) {
+    return next(ApiError.notFound());
   }
 
-  public async getForecasts(
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ): Promise<void> {
-    const { id } = req.params;
-    if (!id) {
-      return next(ApiError.badRequest());
-    }
+  res.send({
+    data: city,
+  });
+};
 
-    const forecast = await getCityForecasts(parseInt(id));
-
-    if (!forecast) {
-      next(ApiError.notFound());
-    }
-    res.send({
-      data: forecast,
-    });
+export const getForecasts = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const { id } = req.params;
+  if (!id) {
+    return next(ApiError.badRequest());
   }
-}
+
+  const forecast = await getCityForecasts(parseInt(id));
+
+  if (!forecast) {
+    next(ApiError.notFound());
+  }
+  res.send({
+    data: forecast,
+  });
+};
