@@ -1,3 +1,3 @@
 # Weather forecast
 
-The Nodejs & React pet project
+Node.js (Express & TypeORM) API
