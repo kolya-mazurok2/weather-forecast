@@ -5,7 +5,7 @@ import { DataSource } from "typeorm";
 const postgresConfig = {
   host: process.env.POSTGRES_HOST || "db",
   port: Number(process.env.POSTGRES_PORT) || 5432,
-  database: process.env.POSTGRESS_DB || "app_db",
+  database: process.env.POSTGRES_DB || "app_db",
   username: process.env.POSTGRES_USER || "postgres",
   password: process.env.POSTGRES_PASSWORD || "postgres",
   ssl: {
