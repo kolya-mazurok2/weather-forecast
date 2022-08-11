@@ -1,20 +1,16 @@
-import ForecastDto from "../../dtos/forecast.dto";
-import { City } from "../../entities/city";
-import { ForecastType } from "../../entities/forecast";
-import { getCities } from "../../repositories/city.repository";
+import ForecastDto from '../../dtos/forecast.dto';
+import { City } from '../../entities/city';
+import { ForecastType } from '../../entities/forecast';
+import { getCities } from '../../repositories/city.repository';
 import {
   createForecast,
   getLastForecast,
   updateForecast,
-} from "../../repositories/forecast.repository";
-import { OpenweatherForecast } from "../../types";
-import { get5day3hours, getCurrent } from "../http/openweathermap";
+} from '../../repositories/forecast.repository';
+import { OpenweatherForecast } from '../../types';
+import { get5day3hours, getCurrent } from '../http/openweathermap';
 
-const createEntity = async (
-  type: ForecastType,
-  inputForecast: OpenweatherForecast,
-  city: City
-) => {
+const createEntity = async (type: ForecastType, inputForecast: OpenweatherForecast, city: City) => {
   const forecast = await createForecast(new ForecastDto(type, inputForecast));
 
   if (forecast) {
@@ -23,17 +19,14 @@ const createEntity = async (
   }
 };
 
-const sync = async (
-  type: ForecastType,
-  receiver: (payload: any) => Promise<any>
-) => {
+const sync = async (type: ForecastType, receiver: (payload: any) => Promise<any>) => {
   const cities = await getCities();
   if (!cities.length) {
     return;
   }
 
-  for (let city of cities) {
-    let response = await receiver({
+  for (const city of cities) {
+    const response = await receiver({
       lat: city.latitude,
       lon: city.longitude,
     });
@@ -51,7 +44,7 @@ const sync = async (
           )
         : response.data;
 
-      for (let forecast of forecasts) {
+      for (const forecast of forecasts) {
         createEntity(type, forecast, city);
       }
     } else {

@@ -1,5 +1,5 @@
-import { ForecastType } from "../entities/forecast";
-import { OpenweatherForecast } from "../types";
+import { ForecastType } from '../entities/forecast';
+import { OpenweatherForecast } from '../types';
 
 export default class ForecastDto {
   public type: ForecastType;
