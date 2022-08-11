@@ -36,8 +36,9 @@ export const getForecasts = async (req: Request, res: Response, next: NextFuncti
   const forecast = await getCityForecasts(parseInt(id));
 
   if (!forecast) {
-    next(ApiError.notFound());
+    return next(ApiError.notFound());
   }
+
   res.send({
     data: forecast,
   });
