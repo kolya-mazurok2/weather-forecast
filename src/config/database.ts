@@ -1,5 +1,5 @@
-import "reflect-metadata";
-import { DataSource } from "typeorm";
+import 'reflect-metadata';
+import { DataSource } from 'typeorm';
 
 interface PostgresConfig {
   host: string;
@@ -13,25 +13,25 @@ interface PostgresConfig {
 }
 
 const postgresConfig: PostgresConfig = {
-  host: process.env.POSTGRES_HOST || "db",
+  host: process.env.POSTGRES_HOST || 'db',
   port: Number(process.env.POSTGRES_PORT) || 5432,
-  username: process.env.POSTGRES_USER || "postgres",
-  password: process.env.POSTGRES_PASSWORD || "postgres",
+  username: process.env.POSTGRES_USER || 'postgres',
+  password: process.env.POSTGRES_PASSWORD || 'postgres',
 };
 
-if (process.env.ENV === "prod") {
-  postgresConfig.database = process.env.POSTGRES_DB || "app_db";
+if (process.env.ENV === 'prod') {
+  postgresConfig.database = process.env.POSTGRES_DB || 'app_db';
   postgresConfig.ssl = {
     rejectUnauthorized: false,
   };
 }
 
 export const dataSource = new DataSource({
-  type: "postgres",
+  type: 'postgres',
   synchronize: true,
   logging: false,
-  entities: ["./src/entities/*.ts"],
+  entities: ['./src/entities/*.ts'],
   subscribers: [],
-  migrations: ["./src/migrations/*.ts"],
+  migrations: ['./src/migrations/*.ts'],
   ...postgresConfig,
 });
