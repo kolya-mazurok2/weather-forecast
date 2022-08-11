@@ -5,8 +5,8 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   OneToMany,
-} from "typeorm";
-import { Forecast } from "./forecast";
+} from 'typeorm';
+import { Forecast } from './forecast';
 
 @Entity()
 export class City {
@@ -16,10 +16,10 @@ export class City {
   @Column()
   name: string;
 
-  @Column("float")
+  @Column('float')
   latitude: number;
 
-  @Column("float")
+  @Column('float')
   longitude: number;
 
   @OneToMany(() => Forecast, (forecast) => forecast.city)

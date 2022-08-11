@@ -1,7 +1,8 @@
-import { errorMessages } from "./constants";
+import { errorMessages } from './constants';
 
 export default class ApiError extends Error {
   public status: number;
+
   public message: string;
 
   constructor(status: number, message: string) {

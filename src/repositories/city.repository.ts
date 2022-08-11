@@ -1,7 +1,7 @@
-import { MoreThanOrEqual, Between } from "typeorm";
-import { dataSource } from "../config/database";
-import { City } from "../entities/city";
-import { ForecastType } from "../entities/forecast";
+import { MoreThanOrEqual } from 'typeorm';
+import { dataSource } from '../config/database';
+import { City } from '../entities/city';
+import { ForecastType } from '../entities/forecast';
 
 export interface CityPayload {
   name: string;
@@ -16,14 +16,14 @@ export type CityUpdatePayload = CityPayload & {
 export const getCity = async (id: number): Promise<City | null> =>
   dataSource.getRepository(City).findOne({
     where: {
-      id: id,
+      id,
     },
   });
 
 export const getCityForecasts = async (id: number): Promise<City | null> =>
   dataSource.getRepository(City).findOne({
     where: {
-      id: id,
+      id,
       forecasts: {
         type: ForecastType.DAY5_HOUR3,
         for_date: MoreThanOrEqual(new Date()),
@@ -31,11 +31,10 @@ export const getCityForecasts = async (id: number): Promise<City | null> =>
     },
     order: {
       forecasts: {
-        for_date: "ASC",
+        for_date: 'ASC',
       },
     },
-    relations: ["forecasts"],
+    relations: ['forecasts'],
   });
 
-export const getCities = async (): Promise<City[]> =>
-  dataSource.getRepository(City).find();
+export const getCities = async (): Promise<City[]> => dataSource.getRepository(City).find();

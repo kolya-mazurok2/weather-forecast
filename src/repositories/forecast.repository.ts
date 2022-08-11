@@ -1,8 +1,8 @@
-import { Between } from "typeorm";
-import { dataSource } from "../config/database";
-import { City } from "../entities/city";
-import { Forecast, ForecastType } from "../entities/forecast";
-import { todayEndDate, todayStartDate } from "../utils/date";
+import { Between } from 'typeorm';
+import { dataSource } from '../config/database';
+import { City } from '../entities/city';
+import { Forecast, ForecastType } from '../entities/forecast';
+import { todayEndDate, todayStartDate } from '../utils/date';
 
 export interface ForecastPayload {
   type: ForecastType;
@@ -28,20 +28,15 @@ export type ForecastUpdatePayload = ForecastPayload & {
   id: number;
 };
 
-export const getCurrentForecast = async (
-  id: number
-): Promise<Forecast | null> => {
-  return dataSource.getRepository(Forecast).findOne({
+export const getCurrentForecast = async (id: number): Promise<Forecast | null> =>
+  dataSource.getRepository(Forecast).findOne({
     where: {
-      id: id,
+      id,
       type: ForecastType.CURRENT,
     },
   });
-};
 
-export const getCurrentForecastsByCityId = async (
-  cityId: number
-): Promise<Forecast | null> =>
+export const getCurrentForecastsByCityId = async (cityId: number): Promise<Forecast | null> =>
   dataSource.getRepository(Forecast).findOne({
     where: {
       type: ForecastType.CURRENT,
@@ -51,7 +46,7 @@ export const getCurrentForecastsByCityId = async (
       },
     },
     order: {
-      for_date: "DESC",
+      for_date: 'DESC',
     },
   });
 
@@ -67,22 +62,18 @@ export const getLastForecast = async (
       },
     },
     order: {
-      for_date: "DESC",
+      for_date: 'DESC',
     },
   });
 
-export const createForecast = async (
-  payload: ForecastPayload
-): Promise<Forecast | null> => {
+export const createForecast = async (payload: ForecastPayload): Promise<Forecast | null> => {
   const repository = dataSource.getRepository(Forecast);
   const forecast = new Forecast();
 
   return repository.save({ ...forecast, ...payload });
 };
 
-export const updateForecast = async (
-  payload: ForecastUpdatePayload
-): Promise<Forecast | null> => {
+export const updateForecast = async (payload: ForecastUpdatePayload): Promise<Forecast | null> => {
   const repository = dataSource.getRepository(Forecast);
 
   const ForecastToUpdate = await repository.findOneBy({ id: payload.id });
@@ -93,7 +84,7 @@ export const updateForecast = async (
   return repository.save({ ...ForecastToUpdate, ...payload });
 };
 
-export const deleteForecast = async (id: number): Promise<Boolean> => {
+export const deleteForecast = async (id: number): Promise<boolean> => {
   const deleteResult = await dataSource.getRepository(Forecast).delete(id);
 
   return Boolean(deleteResult.affected);

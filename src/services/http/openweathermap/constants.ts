@@ -1,10 +1,10 @@
-export const BASE_URL = "https://api.openweathermap.org/data/2.5/";
+export const BASE_URL = 'https://api.openweathermap.org/data/2.5/';
 
 export const DEFAULT_HEADERS = {
-  Accept: "application/json",
+  Accept: 'application/json',
 };
 
-type UNITS = "metric";
+type UNITS = 'metric';
 
 interface QueryParams {
   appid: string;
@@ -12,8 +12,8 @@ interface QueryParams {
 }
 
 export const DEFAULT_QUERY_PARAMS: QueryParams = {
-  appid: process.env.OPENWEATHERMAP_APP_ID || "",
-  units: "metric",
+  appid: process.env.OPENWEATHERMAP_APP_ID || '',
+  units: 'metric',
 };
 
 export interface HTTPResponse<T> {

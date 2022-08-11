@@ -5,12 +5,12 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   ManyToOne,
-} from "typeorm";
-import { City } from "./city";
+} from 'typeorm';
+import { City } from './city';
 
 export enum ForecastType {
-  CURRENT = "current",
-  DAY5_HOUR3 = "5days3hours",
+  CURRENT = 'current',
+  DAY5_HOUR3 = '5days3hours',
 }
 
 @Entity()
@@ -19,22 +19,22 @@ export class Forecast {
   id: number;
 
   @Column({
-    type: "enum",
+    type: 'enum',
     enum: ForecastType,
     default: ForecastType.CURRENT,
   })
   type: ForecastType;
 
-  @Column("float")
+  @Column('float')
   temp: number;
 
-  @Column("float")
+  @Column('float')
   temp_feels_like: number;
 
-  @Column("float")
+  @Column('float')
   temp_min: number;
 
-  @Column("float")
+  @Column('float')
   temp_max: number;
 
   @Column({
@@ -68,7 +68,7 @@ export class Forecast {
   weather_icon: string;
 
   @Column({
-    type: "float",
+    type: 'float',
     nullable: true,
   })
   wind_speed: number;
@@ -79,7 +79,7 @@ export class Forecast {
   wind_deg: number;
 
   @Column({
-    type: "float",
+    type: 'float',
     nullable: true,
   })
   wind_gust: number;

@@ -1,14 +1,6 @@
-import { NextFunction, Request, Response } from "express";
-import ApiError from "../errors/api.error";
-import {
-  getCities,
-  getCity,
-  getCityForecasts,
-} from "../repositories/city.repository";
-
-interface RequestParams {
-  id: number;
-}
+import { NextFunction, Request, Response } from 'express';
+import ApiError from '../errors/api.error';
+import { getCities, getCity, getCityForecasts } from '../repositories/city.repository';
 
 export const getAll = async (_: Request, res: Response) => {
   const cities = await getCities();
@@ -35,11 +27,7 @@ export const get = async (req: Request, res: Response, next: NextFunction) => {
   });
 };
 
-export const getForecasts = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+export const getForecasts = async (req: Request, res: Response, next: NextFunction) => {
   const { id } = req.params;
   if (!id) {
     return next(ApiError.badRequest());
