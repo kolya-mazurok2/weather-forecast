@@ -1,4 +1,4 @@
-import express, { Application } from 'express';
+import express, { Application, NextFunction, Request, Response } from 'express';
 import morgan from 'morgan';
 import { dataSource } from './config/database';
 import router from './routes';
@@ -15,7 +15,9 @@ app.use(morgan('tiny'));
 
 app.use(router);
 
-app.use(apiErrorMiddleware);
+app.use((err: Error, req: Request, res: Response, _: NextFunction) =>
+  apiErrorMiddleware(err, req, res)
+);
 
 (async () => {
   try {
