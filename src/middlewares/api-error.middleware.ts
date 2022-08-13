@@ -6,7 +6,7 @@ const apiErrorMiddleware = (err: Error, req: Request, res: Response) => {
   if (err instanceof ApiError) {
     return res.status(err.status).send({ message: err.message });
   }
-  console.log(res);
+
   return res.status(500).send({ message: errorMessages[500] });
 };
 
