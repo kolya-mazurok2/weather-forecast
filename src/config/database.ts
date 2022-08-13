@@ -2,6 +2,7 @@ import 'reflect-metadata';
 import { DataSource } from 'typeorm';
 import { City } from '../entities/city';
 import { Forecast } from '../entities/forecast';
+import { User } from '../entities/user';
 
 interface PostgresConfig {
   host: string;
@@ -32,7 +33,7 @@ export const dataSource = new DataSource({
   type: 'postgres',
   synchronize: true,
   logging: false,
-  entities: [City, Forecast],
+  entities: [City, Forecast, User],
   subscribers: [],
   ...postgresConfig,
 });
