@@ -3,7 +3,6 @@ import { errorMessages } from '../errors/constants';
 
 export const auth = async (req: Request, res: Response, next: NextFunction) => {
   const apiKey = req.get('API-Key');
-  console.log(apiKey, process.env.API_KEY);
 
   if (!apiKey || apiKey !== process.env.API_KEY) {
     res.status(401).send({
