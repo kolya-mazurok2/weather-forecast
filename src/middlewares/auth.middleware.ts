@@ -1,17 +1,15 @@
 import { NextFunction, Request, Response } from 'express';
-import jwt from 'jsonwebtoken';
 import { errorMessages } from '../errors/constants';
-import { JWT_SECRET_KEY } from '../utils/constants';
 
 export const auth = async (req: Request, res: Response, next: NextFunction) => {
-  const token = req.header('Authorization')?.replace('Bearer ', '') || '';
+  const apiKey = req.get('API-Key');
+  console.log(apiKey, process.env.API_KEY);
 
-  try {
-    jwt.verify(token, JWT_SECRET_KEY);
-    next();
-  } catch {
+  if (!apiKey || apiKey !== process.env.API_KEY) {
     res.status(401).send({
       message: errorMessages[401],
     });
+  } else {
+    next();
   }
 };
