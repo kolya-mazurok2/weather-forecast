@@ -19,7 +19,7 @@ app.use(morgan('tiny'));
 app.use(
   cors({
     origin: '*',
-    allowedHeaders: ['API-Key'],
+    allowedHeaders: ['Access-Control-Allow-Headers', 'Content-Type', 'API-Key'],
   })
 );
 
