@@ -2,7 +2,6 @@ import { Request, Response, Router } from 'express';
 import { errorMessages } from '../errors/constants';
 import cityRouter from './city.router';
 import forecastRouter from './forecast.router';
-import userRouter from './user.router';
 
 const router = Router();
 
@@ -11,7 +10,7 @@ router.get('/ping', (_: Request, res: Response) =>
     message: 'pong',
   })
 );
-router.use('', userRouter);
+
 router.use('/cities', cityRouter);
 router.use('/forecasts', forecastRouter);
 router.get('*', (_: Request, res: Response) =>
