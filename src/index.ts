@@ -6,6 +6,8 @@ import jobs from './jobs';
 import apiErrorMiddleware from './middlewares/api-error.middleware';
 import cors from 'cors';
 
+require('dotenv').config();
+
 const PORT = process.env.PORT || 8000;
 
 const app: Application = express();
