@@ -11,3 +11,10 @@ export const todayEndDate = () => {
 
   return date;
 };
+
+export const getNDaysAgo = (n = 1) => {
+  const date = new Date();
+  date.setDate(date.getDate() - n);
+
+  return date;
+};

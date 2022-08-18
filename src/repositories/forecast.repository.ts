@@ -66,6 +66,18 @@ export const getLastForecast = async (
     },
   });
 
+export const getForecastsIdsBeforeDate = async (
+  type: ForecastType = ForecastType.CURRENT,
+  beforeDate: Date
+): Promise<number[]> =>
+  dataSource
+    .getRepository(Forecast)
+    .createQueryBuilder('forecast')
+    .select('forecast.id')
+    .where('forecast.type = :type', { type })
+    .andWhere('forecast.for_date < :beforeDate', { beforeDate })
+    .getRawMany();
+
 export const createForecast = async (payload: ForecastPayload): Promise<Forecast | null> => {
   const repository = dataSource.getRepository(Forecast);
   const forecast = new Forecast();
@@ -89,3 +101,10 @@ export const deleteForecast = async (id: number): Promise<boolean> => {
 
   return Boolean(deleteResult.affected);
 };
+
+export const deleteForecastsByIds = async (ids: number[]) =>
+  dataSource
+    .createQueryBuilder()
+    .delete()
+    .from(Forecast)
+    .where('forecast.id IN (:...ids)', { ids: ids });

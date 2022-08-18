@@ -1,13 +1,17 @@
+import { dataSource } from '../../config/database';
 import ForecastDto from '../../dtos/forecast.dto';
 import { City } from '../../entities/city';
-import { ForecastType } from '../../entities/forecast';
+import { Forecast, ForecastType } from '../../entities/forecast';
 import { getCities } from '../../repositories/city.repository';
 import {
   createForecast,
+  deleteForecastsByIds,
+  getForecastsIdsBeforeDate,
   getLastForecast,
   updateForecast,
 } from '../../repositories/forecast.repository';
 import { OpenweatherForecast } from '../../types';
+import { getNDaysAgo } from '../../utils/date';
 import { get5day3hours, getCurrent } from '../http/openweathermap';
 
 const createEntity = async (type: ForecastType, inputForecast: OpenweatherForecast, city: City) => {
@@ -60,3 +64,17 @@ export const syncCurrentForecasts = async () => {
 export const sync5day3hoursForecasts = async () => {
   sync(ForecastType.DAY5_HOUR3, get5day3hours);
 };
+
+const deleteEntities = async (type: ForecastType) => {
+  const nDays = type === ForecastType.CURRENT ? 2 : 6;
+
+  const ids = await getForecastsIdsBeforeDate(type, getNDaysAgo(nDays));
+
+  if (ids.length) {
+    deleteForecastsByIds(ids);
+  }
+};
+
+export const deleteOldCurrentForecasts = () => deleteEntities(ForecastType.CURRENT);
+
+export const deleteOld5days3hoursForecasts = () => deleteEntities(ForecastType.DAY5_HOUR3);
