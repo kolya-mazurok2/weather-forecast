@@ -30,7 +30,7 @@ export const getCityForecasts = async (
       id,
       forecasts: {
         type,
-        for_date: todayStartDate(),
+        for_date: MoreThanOrEqual(todayStartDate()),
       },
     },
     order: {
