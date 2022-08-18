@@ -2,6 +2,7 @@ import { MoreThanOrEqual } from 'typeorm';
 import { dataSource } from '../config/database';
 import { City } from '../entities/city';
 import { ForecastType } from '../entities/forecast';
+import { todayStartDate } from '../utils/date';
 
 export interface CityPayload {
   name: string;
@@ -29,7 +30,7 @@ export const getCityForecasts = async (
       id,
       forecasts: {
         type,
-        for_date: MoreThanOrEqual(new Date()),
+        for_date: todayStartDate(),
       },
     },
     order: {
