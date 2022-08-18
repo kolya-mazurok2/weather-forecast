@@ -20,12 +20,15 @@ export const getCity = async (id: number): Promise<City | null> =>
     },
   });
 
-export const getCityForecasts = async (id: number): Promise<City | null> =>
+export const getCityForecasts = async (
+  id: number,
+  type: ForecastType = ForecastType.CURRENT
+): Promise<City | null> =>
   dataSource.getRepository(City).findOne({
     where: {
       id,
       forecasts: {
-        type: ForecastType.DAY5_HOUR3,
+        type,
         for_date: MoreThanOrEqual(new Date()),
       },
     },
