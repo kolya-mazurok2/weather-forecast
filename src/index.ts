@@ -1,6 +1,7 @@
 import express, { Application, NextFunction, Request, Response } from 'express';
 import morgan from 'morgan';
-import { dataSource } from './config/database';
+import { dataSource as postgresDataSource } from './config/db/postgres';
+import { dataSource as mongoDataSource } from './config/db/mongo';
 import router from './routes';
 import jobs from './jobs';
 import apiErrorMiddleware from './middlewares/api-error.middleware';
@@ -31,7 +32,8 @@ app.use((err: Error, req: Request, res: Response, _: NextFunction) =>
 
 (async () => {
   try {
-    await dataSource.initialize();
+    await postgresDataSource.initialize();
+    await mongoDataSource.initialize();
 
     if (process.env.ENV === 'prod') {
       jobs();

@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import ApiError from '../errors/api.error';
-import { getCities, getCity, getCityForecasts } from '../repositories/city.repository';
+import { getCities, getCity, getCityForecasts } from '../repositories/postgres/city.repository';
 import { ForecastType } from '../entities/forecast';
 
 export const getAll = async (_: Request, res: Response) => {

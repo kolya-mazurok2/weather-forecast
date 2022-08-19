@@ -9,6 +9,13 @@ services:
       - POSTGRES_DB=${POSTGRES_DB}
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+  mongo:
+    container_name: mongo
+    image: mongo
+    volumes:
+      - ./mongo-data:/mongo-data/db
+    ports:
+      - '27018:27017'
   app:
     build:
       context: .
@@ -19,8 +26,13 @@ services:
       - "8000:8000"
     depends_on:
       - db
+      - mongo
     environment:
       - POSTGRES_HOST=${POSTGRES_HOST}
       - POSTGRES_DB=${POSTGRES_DB}
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - MONGO_HOSTNAME=${MONGO_HOSTNAME}
+      - MONGO_DB=${MONGO_DB}
+      - MONGO_USERNAME=${MONGO_USERNAME}
+      - MONGO_PASSWORD=${MONGO_PASSWORD}

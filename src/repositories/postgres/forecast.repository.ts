@@ -1,8 +1,8 @@
 import { Between } from 'typeorm';
-import { dataSource } from '../config/database';
-import { City } from '../entities/city';
-import { Forecast, ForecastType } from '../entities/forecast';
-import { todayEndDate, todayStartDate } from '../utils/date';
+import { dataSource } from '../../config/db/postgres';
+import { City } from '../../entities/city';
+import { Forecast, ForecastType } from '../../entities/forecast';
+import { todayEndDate, todayStartDate } from '../../utils/date';
 
 export interface ForecastPayload {
   type: ForecastType;

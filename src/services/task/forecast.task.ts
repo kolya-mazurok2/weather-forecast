@@ -2,14 +2,14 @@ import { dataSource } from '../../config/database';
 import ForecastDto from '../../dtos/forecast.dto';
 import { City } from '../../entities/city';
 import { Forecast, ForecastType } from '../../entities/forecast';
-import { getCities } from '../../repositories/city.repository';
+import { getCities } from '../../repositories/postgres/city.repository';
 import {
   createForecast,
   deleteForecastsByIds,
   getForecastsIdsBeforeDate,
   getLastForecast,
   updateForecast,
-} from '../../repositories/forecast.repository';
+} from '../../repositories/postgres/forecast.repository';
 import { OpenweatherForecast } from '../../types';
 import { getNDaysAgo } from '../../utils/date';
 import { get5day3hours, getCurrent } from '../http/openweathermap';
